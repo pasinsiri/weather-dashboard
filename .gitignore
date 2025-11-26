@@ -209,3 +209,4 @@ __marimo__/
 # UV file systems
 .python-version
 pyproject.toml
+uv.lock
