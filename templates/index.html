@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-900">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="h-full flex items-center justify-center p-4">
+  <div class="max-w-4xl w-full">
+    <!-- Search -->
+    <form method="POST" class="mb-8">
+      <div class="flex gap-2 max-w-md mx-auto">
+        <input type="text" name="city" placeholder="Enter city..." 
+               class="flex-1 px-4 py-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-500"
+               value="{{ location }}"/>
+        <button type="submit" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-medium">
+          Search
+        </button>
+      </div>
+    </form>
+
+    {% if weather.error %}
+      <div class="text-center text-red-400 text-xl">{{ weather.error }}</div>
+    {% else %}
+      <!-- Current Weather -->
+      <div class="text-center text-white mb-10">
+        <h1 class="text-4xl font-bold mb-2">{{ weather.city }}, {{ weather.country }}</h1>
+        <div class="text-8xl font-light my-4">{{ weather.temp }}°C</div>
+        <div class="text-2xl text-gray-300 capitalize">{{ weather.description }}</div>
+        <div class="text-lg text-gray-400 mt-2">
+          Feels like {{ weather.feels_like }}°C • Humidity {{ weather.humidity }}% • Wind {{ weather.wind_speed }} m/s
+        </div>
+        <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@4x.png" alt="weather icon" class="mx-auto w-48"/>
+      </div>
+
+      <!-- 5-Day Forecast -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {% for day in weather.forecast %}
+        <div class="bg-gray-800 rounded-xl p-4 text-center text-white">
+          <div class="text-sm text-gray-400">{{ day.date }}</div>
+          <img src="https://openweathermap.org/img/wn/{{ day.icon }}@2x.png" class="w-16 mx-auto"/>
+          <div class="text-2xl font-bold">{{ day.temp }}°</div>
+          <div class="text-xs text-gray-400 capitalize">{{ day.desc }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
