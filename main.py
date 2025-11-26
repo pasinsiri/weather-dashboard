@@ -19,3 +19,11 @@ async def home(request: Request):
         "location": location
     })
 
+@app.post("/")
+async def search_city(request: Request, city: str = Form(...)):
+    weather = await get_weather(city, os.getenv("OPENWEATHER_API_KEY"))
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "weather": weather,
+        "location": city
+    })
