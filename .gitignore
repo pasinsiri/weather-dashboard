@@ -210,3 +210,6 @@ __marimo__/
 .python-version
 pyproject.toml
 uv.lock
+
+# Test files
+test.sh
